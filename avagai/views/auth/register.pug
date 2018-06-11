@@ -1,0 +1,65 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer, src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    //- script(src="/src/js/tools/register.js")
+    link(rel="stylesheet" href="/css/register.css")
+    title Mutfin
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              a#login.nav-btn(href="/auth/login") 로그인
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    .main-grid
+      .main-container
+        .register-title
+          p 새 계정 만들기
+          if data == 'empty'
+            span#msg 필수 항목을 입력해주세요.
+        .main-form
+          form(action="/auth/register" method="post")
+            .name
+              #div-first_name.sub-form
+                p 성
+                label(for="first_name")
+                  input#first_name(type="text" name="last_name" placeholder="성" maxlength="20" required)
+              #div-last_name.sub-form
+                p 이름
+                label(for="last_name")
+                  input#last_name(type="text" name="first_name" placeholder="이름(성은 제외)" maxlength="20" required)
+                    
+            // end of name
+            #div-email.sub-form
+              p 이메일
+              if data == 'email_exists'
+                span#msg 이미 존재하는 메일주소 입니다.
+              if data == 'email'
+                span#msg 올바른 이메일 형식이 아닙니다.
+              if data == 'email_len'
+                span#msg 올바른 이메일 형식이 아닙니다.
+              label(for="email")
+                input#email(type="text" name="username" placeholder="이메일" maxlength="50" required)
+            // end of email
+            #div-password.sub-form
+              p 비밀번호
+              if data == 'password'
+                span#msg 비밀번호는 7자리 이상이어야 합니다.
+              label(for="password")
+                input#password(type="password" name="password" placeholder="새 비밀번호 (최소 7자리)" maxlength="50" autocomplete="off" required)
+            // end of password
+            #submit.sub-form
+              input(type="submit" value="가입하기")
+    // Footer
+    footer#main-footer
+      p.logo  Avagai © 2018

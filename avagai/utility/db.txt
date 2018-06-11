@@ -1,0 +1,241 @@
+*******************************************************************************
+USER ACCOUNT
+*******************************************************************************
+
+create table users(
+  user_id varchar(100) not null,
+  password varchar(500),
+  salt varchar(500),
+  first_name varchar(20),
+  last_name varchar(20),
+  register_date varchar(20),
+  primary key(user_id)
+)engine=innodb;
+
+*******************************************************************************
+SURVEY
+*******************************************************************************
+create table survey_profile(
+  user_id varchar(100) not null,
+  height  float(0),
+  weight  float(0),
+  birth char(10),
+  occupation  varchar(20),
+  commute varchar(20),
+  children  varchar(20),
+  shirts_size varchar(20),
+  shirts_fit int,
+  waist_size  varchar(20),
+  waist_fit int,
+  outer_size  varchar(20),
+  shoe_size int,
+  body_shape  varchar(20),
+  face_shape  varchar(20),
+  skin_tone varchar(20),
+  primary key(user_id),
+  foreign key(user_id) references users(user_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table survey_fit(
+  user_id varchar(100) not null,
+  tuck_in varchar(10),
+  fit_prob2 varchar(10),
+  fit_prob3 varchar(10),
+  fit_prob4 varchar(10),
+  fit_prob5 varchar(10),
+  fit_prob6 varchar(10),
+  primary key(user_id),
+  foreign key(user_id) references users(user_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table survey_style(
+  user_id varchar(100) not null,
+  freq_everyday_casual varchar(20),
+  freq_business_casual varchar(20),
+  freq_business_formal varchar(20),
+  freq_night_out varchar(20),
+  freq_work_out varchar(20),
+  freq_special varchar(20),
+  style_comfort varchar(20),
+  dress_code varchar(20),
+  dry_clean varchar(10),
+  price_shirts varchar(20),
+  price_sweats varchar(20),
+  price_button varchar(20),
+  price_pants varchar(20),
+  price_shorts varchar(20),
+  price_outer varchar(20),
+  price_shoes varchar(20),
+  avoid_comment varchar(100),
+  color varchar(100),
+  adventure varchar(10),
+  kakao varchar(100),
+  instagram varchar(100),
+  facebook varchar(200),
+  sns_other varchar(200),
+  extra_comment varchar(500),
+  primary key(user_id),
+  foreign key(user_id) references users(user_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+*******************************************************************************
+SURVEY FIT
+*******************************************************************************
+create table tshirts_fit(
+  tshirts_fit varchar(20) not null,
+  primary key(tshirts_fit)
+)engine=innodb;
+
+create table preference_tshirts_fit(
+  user_id varchar(100) not null,
+  tshirts_fit varchar(20),
+  primary key(user_id, tshirts_fit),
+  foreign key(user_id) references users(user_id),
+  foreign key(tshirts_fit) references tshirts_fit(tshirts_fit)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table button_fit(
+  button_fit varchar(20) not null,
+  primary key(button_fit)
+)engine=innodb;
+
+create table preference_button_fit(
+  user_id varchar(100) not null,
+  button_fit varchar(20),
+  primary key(user_id, button_fit),
+  foreign key(user_id) references users(user_id),
+  foreign key(button_fit) references button_fit(button_fit)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table jeans_fit(
+  jeans_fit varchar(20) not null,
+  primary key(jeans_fit)
+)engine=innodb;
+
+create table preference_jeans_fit(
+  user_id varchar(100) not null,
+  jeans_fit varchar(20),
+  primary key(user_id, jeans_fit),
+  foreign key(user_id) references users(user_id),
+  foreign key(jeans_fit) references jeans_fit(jeans_fit)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table shorts_fit(
+  shorts_fit varchar(20) not null,
+  primary key(shorts_fit)
+)engine=innodb;
+
+create table preference_shorts_fit(
+  user_id varchar(100) not null,
+  shorts_fit varchar(20),
+  primary key(user_id, shorts_fit),
+  foreign key(user_id) references users(user_id),
+  foreign key(shorts_fit) references shorts_fit(shorts_fit)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+
+*******************************************************************************
+SURVEY STYLE
+*******************************************************************************
+
+create table brand(
+  brand_name varchar(100) not null,
+  file_type varchar(10),
+  primary key(brand_name)
+)engine=innodb;
+
+create table preference_brand(
+  user_id varchar(100) not null,
+  brand_name varchar(100),
+  primary key(user_id, brand_name),
+  foreign key(user_id) references users(user_id),
+  foreign key(brand_name) references brand(brand_name)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table pattern(
+  pattern_id int(10) not null auto_increment,
+  file_type varchar(10),
+  primary key(pattern_id)
+)engine=innodb;
+
+create table preference_pattern(
+  user_id varchar(100) not null,
+  pattern_id int(10),
+  answer varchar(10),
+  primary key(user_id, pattern_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(pattern_id) references pattern(pattern_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table shoe(
+  shoe_id int(10) not null auto_increment,
+  shoe_name varchar(10),
+  file_type varchar(10),
+  primary key(shoe_id)
+)engine=innodb;
+
+create table preference_shoe(
+  user_id varchar(100) not null,
+  shoe_id int(10),
+  answer varchar(10),
+  primary key(user_id, shoe_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(shoe_id) references shoe(shoe_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table avoid(
+  avoid_id int(10) not null auto_increment,
+  avoid_item varchar(50),
+  primary key(avoid_id)
+)engine=innodb;
+
+create table preference_avoid(
+  user_id varchar(100) not null,
+  avoid_id int(10),
+  primary key(user_id, avoid_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(avoid_id) references avoid(avoid_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table style_types(
+  style_id int(100) not null auto_increment,
+  category varchar(20),
+  file_name varchar(100),
+  file_type varchar(10),
+  primary key(style_id)
+)engine=innodb;
+
+create table preference_style(
+  user_id varchar(100) not null,
+  style_id int(10),
+  primary key(user_id, style_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(style_id) references style_types(style_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+*******************************************************************************
+*******************************************************************************

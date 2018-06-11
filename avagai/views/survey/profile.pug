@@ -1,0 +1,351 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer="" src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+    script(type="text/javascript" src="/tools/validate_profile.js")
+    link(rel="stylesheet" href="/css/profile.css")
+    title Profile
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              a#login.nav-btn(href="/auth/logout") 로그아웃
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    // Main Container
+    .main-grid
+      .main-container
+        .survey-progress-header
+          h1 프로필
+          h3 설문 1/3단계
+        .welcome
+          .greeting
+            h2 #{name}님 안녕하세요,
+          .description
+            p
+              | 지금부터 #{name}님에 대해 알아보는 설문을 시작하겠습니다.
+              | 필요한 것만 추렸습니다! 조금 길더라도 꼼꼼히 알려주세요.
+        .border
+          
+        // Height
+        form(action="/survey/profile" method="post")
+          .survey-container
+            .survey-question
+              p 키가 몇인가요?
+              p#height
+              if msg == 'empty height'
+                p#msg 여기 빠뜨리셨요.
+            .survey-answer
+              .unit-grid
+                if data
+                  input.textbox(type="text" name="height" maxlength="10" value=data.height)
+                else
+                  input.textbox(type="text" name="height" maxlength="10" required)
+                p.unit cm
+          .border
+            
+          // Weight
+          .survey-container
+            .survey-question
+              p 몸무게를 적어주세요.
+              p#weight
+              if msg == 'empty weight'
+                p#msg 여기 빠뜨리셨요.
+            .survey-answer
+              .unit-grid
+                if data
+                  input.textbox(type="text" name="weight" maxlength="10" value=data.weight)
+                else
+                  input.textbox(type="text" name="weight" maxlength="10" required)
+                p.unit kg
+          .border
+            
+          // Birth
+          .survey-container
+            .survey-question
+              p.question-top 생일이 언제인가요?
+              p.question-sub yyyymmdd
+              p#birth
+              if msg == 'empty birth'
+                p#msg 여기 빠뜨리셨요.
+              if msg == 'birth format'
+                p#msg 형식이 맞지 않습니다.
+                  
+            .survey-answer
+              if data
+                input.textbox(type="text" name="birth" maxlength="8" value=data.birth)
+              else
+                input.textbox(type="text" name="birth" maxlength="8" required)
+          .border
+          
+          // Job
+          .survey-container
+            .survey-question
+              p 어떤 일을 하시나요?
+            .survey-answer
+              -
+                var jobs = [
+                  {'--':'--'},
+                  {'science':'과학 전문가 및 관련직'},
+                  {'information':'정보통신 전문가 및 기술직'},
+                  {'architecture': '건축 및 토목 공학 기술자'},
+                  {'air':'항공기 선박 관리 및 관제사'},
+                  {'medicine':'의료진료 전문가'},
+                  {'welfare':'사회복지관련 종사자'},
+                  {'religion':'종교관련 종사자'},
+                  {'education':'교육전문과 및 관련직'},
+                  {'legal':'법률 전문가'},
+                  {'business/finance':'경영/금융 전문가'},
+                  {'art':'문화 예술 전문가 및 관련직'},
+                  {'sports':'스포츠 관련직'},
+                  {'public_security':'경찰 소방 및 보안 관련 서비스직'},
+                  {'cabin':'항공기 객실승무원'},
+                  {'leisure':'여가 관련 종사자'},
+                  {'food':'조리 및 음식 서비스직'},
+                  {'visiting_sales':'방문ㆍ노점 및 통신 판매 관련직'},
+                  {'sales':'매장 판매직'},
+                  {'forest':'임업관련 종사자'},
+                  {'fish':'어업관련 종사자'},
+                  {'vegi':'작물재배 종사자'},
+                  {'stockbreeding':'축산 및 사육 관련 종사자'},
+                  {'labor':'단순노무 종사자'},
+                  {'soldier':'군인'},
+                  {'machinary':'장치 기계조작 및 조립 종사자'},
+                  {'free':'프리랜서'},
+                  {'unemployeed':'무직'},
+                  {'other':'기타'}
+                ]
+              select#job.select-box(name="job")
+                each obj in jobs
+                  each key, val in obj
+                    if data
+                      option(value=val name="jobs_option" selected=data.occupation==val) #{key}
+                    else
+                      option(value=val name="jobs_option" selected=val=="--") #{key}
+          .border
+          
+          
+          // Commute
+          .survey-container
+            .survey-question
+              p 어떻게 통근하나요?
+            .survey-answer
+              - 
+                var commute = [
+                  {'bike': '자전거'},
+                  {'walk': '걸어서'},
+                  {'drive': '운전'},
+                  {'transport': '교통수단'},
+                  {'other': '기타'}
+                ]
+              each obj in commute
+                each key, val in obj
+                  .survey-answer-radio
+                    label.btn
+                      if data
+                        input(type="radio" value=val name="commute_radio" checked=data.commute==val)
+                      else
+                        input(type="radio" value=val name="commute_radio")
+                      span.empty-circle
+                        i.far.fa-circle.fa-1x
+                      span.full-circle
+                        i.fas.fa-circle.fa-1x
+                      span  #{key}
+          .border
+          // Children
+          .survey-container
+            .survey-question
+              p 자녀가 있으신가요?
+            .survey-answer
+              .survey-answer-switch
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="yes" name="parent" checked=data.children=='yes')
+                    else
+                      input(type="radio" value="yes" name="parent")
+                    span 네
+                  label
+                    if data
+                      input(type="radio" value="no" name="parent" checked=data.children=='no')
+                    else
+                      input(type="radio" value="no" name="parent")
+                    span 아니오
+          .border
+          
+          // Body Shape
+          .survey-container
+            .survey-question
+              p 고객님의 몸은 다음 중 어느것에 해당하나요?
+              p#bodyshape
+            .survey-answer
+              .survey-answer-list
+                ul
+                  - 
+                    var body = [
+                      {'slim' : ['슬림', '/img/profile/slim.png']},
+                      {'average': ['평균', '/img/profile/average.png']},
+                      {'athletic': ['탄탄', '/img/profile/athletic.png']},
+                      {'husky': ['허스키', '/img/profile/husky.png']}
+                    ]
+                  each obj in body
+                    each key, val in obj
+                      li
+                        if data
+                          input(id=val type="radio" name="bodyshape_radio" value=val checked=data.body_shape==val)
+                        else
+                          input(id=val type="radio" name="bodyshape_radio" value=val)
+                        label.img-selector(for=val)
+                          img(src=key[1])
+                          span #{key[0]}
+          .border
+          // Face Shape
+          .survey-container
+            .survey-question
+              p 고객님의 얼굴형은 다음 중 어느것에 해당하나요?
+              p#faceshape
+            .survey-answer
+              .survey-answer-list
+                ul
+                  - 
+                    var body = [
+                      {'egg' : ['계란형 얼굴', '/img/profile/egg.png']},
+                      {'diamond': ['다이아몬드형 얼굴', '/img/profile/diamond.png']},
+                      {'triangle': ['삼각형 얼굴', '/img/profile/triangle.png']},
+                      {'invert_triangle': ['역삼각형 얼굴', '/img/profile/invert_triangle.png']},
+                      {'long': ['긴 얼굴', '/img/profile/long.png']},
+                      {'round': ['둥근 얼굴', '/img/profile/round.png']},
+                      {'square': ['각진 얼굴', '/img/profile/square.png']}
+                    ]
+                  each obj in body
+                    each key, val in obj
+                      li
+                        if data
+                          input(id=val type="radio" name="faceshape_radio" value=val checked=data.face_shape==val)
+                        else
+                          input(id=val type="radio" name="faceshape_radio" value=val)
+                        label.img-selector(for=val)
+                          img(src=key[1])
+                          span #{key[0]}
+          .border
+          
+          
+          // Skintone
+          .survey-container
+            .survey-question
+              p 고객님의 피부톤은 무슨 색인가요?
+              p#skintone
+            .survey-answer
+              #div-skintone.survey-answer-list
+                ul
+                  - var n = 1
+                  while n < 10
+                    li
+                      if data
+                        input(id="skintone"+n type="radio" value="skintone"+n name="skintone_radio" checked=data.skin_tone=="skintone"+n)
+                      else
+                        input(id="skintone"+n type="radio" value="skintone"+n name="skintone_radio")
+                      label.img-selector(for="skintone"+n)
+                        span(class="color-box-background-"+n++)
+          .border
+      
+          // Sizes
+          .survey-container
+            .survey-question
+              p 평소에 입는 옷의 사이즈는 무엇인가요?
+            .survey-answer
+              .survey-answer-subgroup
+                .survey-size-subgroup
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 셔츠
+                    .survey-size-right
+                      - var shirts_size = ['85-90', '90-95', '95-100', '100-105', '105-110', '110+']
+                      select.select-box(name="shirt_size")
+                        each s in shirts_size
+                          if data
+                            option(value=s name="shirt_size" selected=data.shirts_size==s) #{s}
+                          else
+                            option(value=s name="shirt_size") #{s}
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 잘 맞나요?
+                    .survey-size-right
+                      - var shirts_size = ['가끔 작아요', '항상 잘 맞아요', '가끔 커요']
+                      select.select-box(name="shirt_size2")
+                        each i, s in shirts_size
+                          if data
+                            option(value=s name="shirt_size2" selected=data.shirts_fit==s)  #{i}
+                          else
+                            option(value=s name="shirt_size2")  #{i}
+                .border
+                .survey-size-subgroup
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 바지 허리
+                    .survey-size-right
+                      - var waist_size = ['26', '27', '28', '29', '30', '32', '34', '36', '38', '40', '42', '44', '46']
+                      select.select-box(name="waist_size")
+                        each s in waist_size
+                          if data
+                            option(value=s name="waist_size" selected=data.waist_size==s) #{s}
+                          else
+                            option(value=s name="waist_size") #{s}
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 잘 맞나요?
+                    .survey-size-right
+                      - var waist_size = ['가끔 작아요', '항상 잘 맞아요', '가끔 커요']
+                      select.select-box(name="waist_size2")
+                        each i, s in waist_size
+                          if data
+                            option(value=s name="waist_size2" selected=data.waist_fit==s) #{i}
+                          else
+                            option(value=s name="waist_size2" ) #{i}
+                .border
+                .survey-size-subgroup
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 아우터
+                    .survey-size-right
+                      - var outer_size = ['S', 'M', 'L', 'XL', 'XXL']
+                      select.select-box(name="outer_size")
+                        each s in outer_size
+                          if data
+                            option(value=s name="outer_size" selected=data.outer_size==s) #{s}
+                          else
+                            option(value=s name="outer_size") #{s}
+                .border
+                .survey-size-subgroup
+                  .survey-size-subgroup-row
+                    .survey-size-left
+                      span 신발
+                    .survey-size-right
+                      - var shoe_size = ['245', '250', '255', '260', '265', '270', '275', '280', '285', '290', '295', '300']
+                      select.select-box(name="shoe_size")
+                        each s in shoe_size
+                          if data
+                            option(value=s name="shoe_size" selected=data.shoe_size==s) #{s}
+                          else
+                            option(value=s name="shoe_size") #{s}
+                  
+          // end of survey container size
+          // submit
+          .submit
+            button(type="submit" id="checkBtn")
+              span 저장하고 다음 단계로
+        // end of submit button
+      // end of main container
+    // Footer
+    footer#main-footer
+      p.logo  Avagai © 2018

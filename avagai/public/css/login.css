@@ -1,0 +1,103 @@
+@import url('layout.css');
+
+/* header */
+#register{
+  float: right;
+  padding-right: 4rem;
+  padding-top: 2rem;
+  font-size: 1.2rem;
+  color: var(--dark);
+}
+
+.main-container{
+  margin-top: 7rem;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.login-title{
+  font-family: NanumBarunGothic;
+  font-size: 2rem;
+}
+
+.login-title p{
+  margin-bottom: 1rem;
+}
+
+.id input, .password input {
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 0.95em;
+  margin-top: 4px;
+}
+
+.main-form{
+  margin-top: 3px;
+}
+
+.id, .password{
+  margin-bottom: 1.5rem;
+}
+
+.main-form p{
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+}
+
+.submit{
+  margin-top: 4rem;
+  margin-bottom: 1rem;
+}
+
+.border-line{
+  top: 0px;
+  margin:0px;
+  padding: 0px 2px 2px 3px;
+  width: 100%;
+  border-bottom: 1px solid grey;
+}
+.submit input{
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border-width: 1px;
+  border-style: solid;
+  padding: 16px;
+  outline: 0;
+  font-family: inherit;
+  font-size: 1rem;
+  background-color: var(--primary);
+}
+.submit input:hover{
+  background-color: var(--font);
+  color: white;
+}
+.register{
+  margin-bottom: 2rem;
+}
+.register h4{
+  margin-bottom: 10px;
+}
+a{
+  color: blue;
+}
+
+#main-footer{
+  margin-top: 12rem;
+}
+
+@media(min-width: 700px){
+  .main-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .main-container{
+    grid-column: 2/4;
+  }
+}

@@ -1,0 +1,478 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer, src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+    script(type="text/javascript" src="/tools/checkwords.js")
+    script(type="text/javascript" src="/tools/load_more.js")
+    script(type="text/javascript" src="/tools/validate_style.js")
+    link(rel="stylesheet" href="/css/style.css")
+    title Style
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              a#login.nav-btn(href="/auth/logout") 로그아웃
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+    // Main
+    .main-grid
+      .main-container
+        .survey-progress-header
+          h1 스타일
+          h3 설문 3/3단계
+        .border
+        form(action="/survey/style" method="post")
+          // Frequency
+          .survey-container
+            .survey-question
+              p 다음의 옷을 얼마나 자주 입으시나요?
+            .survey-answer
+              -
+                var wear = [
+                  {'everyday_casual': ['캐주얼', 'Ex: 청바지, 셔츠, 후드, 맨투맨']},
+                  {'business_casual': ['비즈니스 캐주얼', '']},
+                  {'business_formal': ['수트 / 정장', '']},
+                  {'night_out': ['파티 / 클럽 복장', '']},
+                  {'work_out': ['운동복', '']},
+                  {'special': ['특별한 날 / 격식있는 복장', '']}
+                ]
+              each obj in wear
+                each wear_key, wear_val in obj
+                  .survey-answer-subgroup-title
+                    p.sub1 #{wear_key[0]}
+                    if wear_key[1].length != 0
+                      p.sub2 #{wear_key[1]}
+                  
+                  -
+                    var freq = [
+                      {'everyday' : '거의 매일 입어요'},
+                      {'week34' : '일주일에 3-4번 정도'},
+                      {'week12' : '일주일에 1-2번 정도'},
+                      {'month' : '한 달에 1-2번 정도'},
+                      {'rarely' : '잘 입지 않아요'}
+                    ]
+                  each obj2 in freq
+                    each freq_key, freq_val in obj2
+                      .survey-answer-radio
+                        label.btn
+                          if data
+                            input(type="radio" value=freq_val name=wear_val checked=data["freq_"+wear_val]==freq_val)
+                          else
+                            input(type="radio" value=freq_val name=wear_val)
+                          span.empty-circle
+                            i.far.fa-circle.fa-1x
+                          span.full-circle
+                            i.fas.fa-circle.fa-1x
+                          span #{freq_key}
+                          
+          .border
+          // Style or Comfort
+          .survey-container
+            .survey-question
+              p 평소에 어떤 복장을 주로 입으시나요? 
+            .survey-answer
+              .survey-answer-radio
+                label.btn
+                  if data
+                    input(type="radio" value="style" name="style_comfort" checked=data.style_comfort=="style")
+                  else
+                    input(type="radio" value="style" name="style_comfort")
+                  span.empty-circle
+                    i.far.fa-circle.fa-1x
+                  span.full-circle
+                    i.fas.fa-circle.fa-1x
+                  span 스타일리쉬한 복장
+              .survey-answer-radio
+                label.btn
+                  if data
+                    input(type="radio" value="comfort" name="style_comfort" checked=data.style_comfort=="comfort")
+                  else
+                    input(type="radio" value="comfort" name="style_comfort")
+                  span.empty-circle
+                    i.far.fa-circle.fa-1x
+                  span.full-circle
+                    i.fas.fa-circle.fa-1x
+                  span 편안한 복장
+          .border
+            
+          // Office Dress Code
+          .survey-container
+            .survey-question
+              .survey-question
+                p 사무실 드레스 코드는 어떤가요?
+              .survey-answer
+                -
+                  var dress_code = [
+                    {'none' : '캐주얼 / 드레스코드 없어요'},
+                    {'buss_casual' : '비즈니스 캐주얼'},
+                    {'buss_formal' : '수트 / 정장'},
+                    {'uniform' : '유니폼'}
+                  ]
+                each obj in dress_code
+                  each key, val in obj
+                    .survey-answer-radio
+                      label.btn
+                        if data
+                          input(type="radio" value=val name="dress_code" checked=data.dress_code==val)
+                        else
+                          input(type="radio" value=val name="dress_code")
+                        span.empty-circle
+                          i.far.fa-circle.fa-1x
+                        span.full-circle
+                          i.fas.fa-circle.fa-1x
+                        span #{key}
+          .border
+            
+          // Dry Clean
+          .survey-container
+            .survey-question
+              p 적어도 한 달에 한 번 옷을 드라이크리닝 하시나요?
+            .survey-answer
+              .survey-answer-switch
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="yes" name="dry_clean" checked=data.dry_clean=="yes")
+                    else
+                      input(type="radio" value="yes" name="dry_clean")
+                    span 네
+                  label
+                    if data
+                      input(type="radio" value="no" name="dry_clean" checked=data.dry_clean=="no")
+                    else
+                      input(type="radio" value="no" name="dry_clean")
+                    span 아니오
+          .border
+            
+          // Brands
+          // For Loop & Server
+          .survey-container
+            .survey-question
+              p.question-top 어떤 브랜드를 선호하시나요?
+              p.question-sub 복수 선택 가능합니다
+              p#brand-msg
+            .survey-answer
+              .survey-answer-list              
+                ul
+                  each obj in brand_list
+                    each file_type, brand_name in obj
+                      li
+                        if brand
+                          input(id=brand_name type="checkbox" name="brands" value=brand_name checked=brand.includes(brand_name))
+                          label.img-selector(for=brand_name)
+                            img(src="/img/style/brands/"+brand_name + "." + file_type)
+                        else
+                          input(id=brand_name type="checkbox" name="brands" value=brand_name)
+                          label.img-selector(for=brand_name)
+                            img(src="/img/style/brands/"+brand_name + "." + file_type)
+          .border
+            
+          // Budget
+          .survey-container
+            .survey-question
+              p.question-top 다음 아이템에 얼마를 쓰실 의향이 있으신가요?
+              p.question-sub 고객님 주머니사정에 맞춰 코디해 드릴게요
+            .survey-answer
+              -
+                var clothing = [
+                  {'price_shirts' : '티셔츠'},
+                  {'price_sweats' : '맨투맨'},
+                  {'price_button' : '셔츠 / 블라우스'},
+                  {'price_pants' : '면바지 / 청바지'},
+                  {'price_shorts' : '반바지'},
+                  {'price_outer' : '아우터'},
+                  {'price_shoes' : '신발'}
+                ]
+              - var n = 0
+              each obj in clothing
+                each key, val in obj
+                  .survey-answer-subgroup-title
+                    p.sub1 #{key}
+                  -
+                    var price = [
+                      {'price1': ['3만원 이하', '4만원 이하', '5만원 이하', '6만원 이하', '4만원 이하', '11만원 이하', '5만원 이하']},
+                      {'price2': ['3만원 - 4만원', '5만원 - 6만원', '5만원 - 7만원', '6만원 - 8만원', '4만원 - 5만원', '11만원 - 15만원', '5만원 - 10만원']},
+                      {'price3': ['4만원 - 5만원', '6만원 - 7만원', '7만원 - 9만원', '8만원 - 10만원', '5만원 - 6만원', '15만원 - 21만원', '10만원 - 17만원']},
+                      {'price4': ['5만원 - 7만원', '7만원 - 10만원', '9만원 - 14만원', '10만원 - 17만원', '6만원 - 9만원', '21만원 - 50만원', '17만원 - 24만원']},
+                      {'price5': ['7만원 이상', '10만원 이상', '14만원 이상', '17만원 이상', '9만원 이상', '50만원 이상', '24만원 이상']}
+                    ]
+                    
+                  each obj2 in price
+                    each key2, val2 in obj2
+                      .survey-answer-radio
+                        label.btn
+                          if data
+                            input(type="radio" value=val2 name=val checked=data[val]==val2)
+                          else
+                            input(type="radio" value=val2 name=val)
+                          span.empty-circle
+                            i.far.fa-circle.fa-1x
+                          span.full-circle
+                            i.fas.fa-circle.fa-1x
+                          span #{key2[n]}
+                  - n++
+          .border
+            
+          // Pattern
+          // For Loop & Server
+          .survey-container
+            .survey-question
+              p 다음 패턴을 입으실 의향이 있으신가요?
+            .survey-answer
+              #bigger.survey-answer-list
+                ul
+                  - var n = 1
+                  each obj in pattern_list
+                    each file_type, pattern_id in obj
+                      li
+                        .bigger-img-wrapper
+                          img(src="/img/style/pattern/"+pattern_id + "." + file_type alt="")
+                        .survey-answer-switch
+                          .survey-answer-switch-grid
+                            label
+                              if pattern
+                                input(type="radio" value="yes" name="pattern"+n checked=pattern[n-1]["answer"]=="yes")
+                              else
+                                input(type="radio" value="yes" name="pattern"+n)
+                              span 네
+                            label
+                              if pattern
+                                input(type="radio" value="maybe" name="pattern"+n checked=pattern[n-1]["answer"]=="maybe")
+                              else
+                                input(type="radio" value="maybe" name="pattern"+n checked=true)
+                              span 상관없어요
+                            label
+                              if pattern
+                                input(type="radio" value="never" name="pattern"+n checked=pattern[n-1]["answer"]=="never")
+                              else
+                                input(type="radio" value="never" name="pattern"+n)
+                              span 아니요
+                            - n++
+          .border
+                            
+          // Shoe
+          // For Loop & Server
+          .survey-container
+            .survey-question
+              p 다음 신발을 신으실 의향이 있으신가요?
+            .survey-answer
+              #bigger.survey-answer-list
+                ul
+                  - var n = 1
+                  each obj in shoe_list
+                    each file_type, shoe_id in obj
+                      li
+                        .img-name
+                          span #{shoe_name[n-1]}
+                        .bigger-img-wrapper
+                          img(src="/img/style/shoe/"+shoe_id + "." + file_type alt="")
+                        .survey-answer-switch
+                          .survey-answer-switch-grid
+                            label
+                              if shoe
+                                input(type="radio" value="yes" name="shoe"+n checked=shoe[n-1]["answer"]=="yes")
+                              else
+                                input(type="radio" value="yes" name="shoe"+n)
+                              span 네
+                            label
+                              if shoe
+                                input(type="radio" value="maybe" name="shoe"+n checked=shoe[n-1]["answer"]=="maybe")
+                              else
+                                input(type="radio" value="maybe" name="shoe"+n checked=true)
+                              span 상관없어요
+                            label
+                              if shoe
+                                input(type="radio" value="never" name="shoe"+n checked=shoe[n-1]["answer"]=="never")
+                              else
+                                input(type="radio" value="never" name="shoe"+n)
+                              span 아니요
+                            - n++
+          .border
+          
+          // Avoid
+          .survey-container
+            .survey-question
+              p 추천받고 싶지 <strong>않은</strong> 아이템이 있나요? 
+              p#avoid-msg
+            .survey-answer
+              
+              -
+                var rec = [
+                {'graphic': '프린트 셔츠'},
+                {'china': '차이나 칼라'},
+                {'vneck': '브이넥'},
+                {'round': '라운드넥'},
+                {'shorts': '반바지'},
+                {'short_button': '반팔 버트업 셔츠'},
+                {'socks': '양말'},
+                {'shoes': '신발'},
+                {'tie': '넥타이'},
+                {'other': '기타'},
+                {'none': '없어요. 저에게 어울리는 건 다 추천 해주세요~'}
+                ]
+              each obj in rec
+                each key, val in obj
+                  .survey-answer-radio
+                    label.btn
+                      if avoid
+                        input(type="checkbox" value=avoid_list[val] name="avoid" checked=avoid.includes(avoid_list[val]))
+                      else
+                        input(type="checkbox" value=avoid_list[val] name="avoid")
+                      span.empty-circle
+                        i.far.fa-square.fa-1x
+                      span.full-circle
+                        i.far.fa-check-square.fa-1x
+                      span #{key}
+          .border
+            
+          //Avoid other
+          .survey-container
+            .survey-question
+              p.question-top (기타를 선택했을 경우) 어떤 아이템을 추천받고 싶지 않으신지 적어주세요.
+              p.question-sub '샌들', '모자'와 같이 단어로 적어주세요.
+            .survey-answer
+              .survey-answer
+                if data
+                  input.textbox(type="text" name="avoid_comment" maxlength="80" value=data.avoid_comment)
+                else
+                  input.textbox(type="text" name="avoid_comment" maxlength="80")
+          .border
+            
+          // Color
+          .survey-container
+            .survey-question
+              p.question-top 추천받고 싶지 <strong>않은</strong> 컬러가 있나요?
+              p.question-sub Ex: 노랑, 핑크, 보라
+            .survey-answer
+              .survey-answer
+                if data
+                  input.textbox(type="text" name="color" maxlength="80" value=data.color)
+                else
+                  input.textbox(type="text" name="color" maxlength="80")
+          .border
+            
+          // Style
+          // For Loop & Server
+          .survey-container
+            .survey-question  
+              p.question-top 마음에 드는 스타일을 골라주세요.
+              p.question-sub 복수 선택 가능합니다
+              p#style-msg
+            .survey-answer
+              #style.survey-answer-list              
+                ul#style-ul
+                  each obj in style_list
+                    each file_path, style_id in obj
+                      li
+                        if style
+                          input(id=style_id type="checkbox" name="style" value=style_id checked=style.includes(style_id))
+                          label.img-selector(for=style_id)
+                            img(src="/img/style/style-image/" + file_path)
+                        else
+                          input(id=style_id type="checkbox" name="style" value=style_id)
+                          label.img-selector(for=style_id)
+                            img(src="/img/style/style-image/" + file_path)
+                          
+            .load-more
+              input(type="button", id="load-more-styles" value="스타일 더 보기")
+                
+          .border
+          
+          // Adventure
+          .survey-container
+            .survey-question
+              p 평소 스타일에서 벗어나 보실 생각이 있으신가요? 
+            .survey-answer
+              -
+                var adv = [
+                  {'yes': '좋아요! 전 새로운 브랜드와 트렌드에 열려있어요.'},
+                  {'maybe': '적당히요. 평소 스타일에서 크게 벗어나지는 않으면 좋겠어요.'},
+                  {'no': '아니요. 그냥 평소 스타일대로만 코디해주세요.'}
+                ]
+              each obj in adv
+                each exp, ans in obj
+                  .survey-answer-radio
+                    label#adventure.btn
+                      if data
+                        input(type="radio" value=ans name="adventure" checked=data.adventure==ans)
+                      else
+                        input(type="radio" value=ans name="adventure")
+                      span.empty-circle
+                        i.far.fa-circle.fa-1x
+                      span.full-circle
+                        i.fas.fa-circle.fa-1x
+                      span #{exp}
+          .border
+            
+          // SNS
+          .survey-container
+            .survey-question
+              p.question-top 고객님에 대해 조금 더 자세히 알 수 있게 SNS 계정을 알려주세요.
+              p.question-sub 꼭 적지 않으셔도 됩니다. 스타일링 목적으로만 사용할꺼예요.
+            .survey-answer
+              .sns
+                p.sub1 카카오톡 아이디 
+                p.sub2 Ex: Mutfin_mm1
+                label
+                  if data
+                    input(type="text" name="kakao" value=data.kakao)
+                  else
+                    input(type="text" name="kakao")
+              .sns
+                p.sub1 인스타그램 아이디
+                p.sub2 Ex: Mutfin_mm1
+                label
+                  if data
+                    input(type="text" name="instagram" value=data.instagram)
+                  else
+                    input(type="text" name="instagram")
+              .sns
+                p.sub1 페이스북 주소
+                p.sub2 Ex: www.facebook.com/monsieur.mutfin
+                label
+                  if data
+                    input(type="text" name="facebook")
+                  else
+                    input(type="text" name="facebook")
+              .sns
+                p.sub1 기타 계정
+                p.sub2 Ex: 트위터: Mutfin_mm1
+                label
+                  if data
+                    input(type="text" name="sns_other" value=data.sns_other)
+                  else
+                    input(type="text" name="sns_other")
+          .border
+          
+          // More
+          .survey-container
+            .survey-question
+              p.question-top 스타일리스트가 더 알아야 할 것이 있으면 알려주세요!
+              p.question-sub 고객님의 최애 쇼핑몰, 브랜드, 생활방식, 몸에 대한 것을 알려주시면 좋아요
+            .survey-answer
+              if data
+                textarea(name="extra_comment", cols="30", rows="10").form-control=data.extra_comment
+              else
+                textarea(name="extra_comment", cols="30", rows="10" )
+              .textarea
+                p#textarea 500
+                p  &nbsp; / 500
+          // End of Main Container
+          .submit
+            button(type="submit" id="checkBtn")
+              span 완료 !
+              //- i.fas.fa-arrow-right.fa-1x
+          a#prev(href="/survey/fit") 이전 단계로 돌아가기
+      // End of Main
+    // Footer
+    footer#main-footer
+      p.logo  Avagai © 2018

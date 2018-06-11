@@ -1,0 +1,80 @@
+//survey fit
+
+INSERT INTO tshirts_fit VALUES ('slim');
+INSERT INTO tshirts_fit VALUES ('regular');
+INSERT INTO tshirts_fit VALUES ('loose');
+
+INSERT INTO button_fit VALUES ('slim');
+INSERT INTO button_fit VALUES ('regular');
+
+INSERT INTO jeans_fit VALUES ('skinny');
+INSERT INTO jeans_fit VALUES ('slim');
+INSERT INTO jeans_fit VALUES ('straight');
+INSERT INTO jeans_fit VALUES ('relaxed');
+
+INSERT INTO pants_fit VALUES ('slim');
+INSERT INTO pants_fit VALUES ('straight');
+INSERT INTO pants_fit VALUES ('relaxed');
+
+INSERT INTO shorts_fit VALUES ('at');
+INSERT INTO shorts_fit VALUES ('above');
+INSERT INTO shorts_fit VALUES ('lower');
+INSERT INTO shorts_fit VALUES ('upper');
+
+//survey Brands
+
+INSERT INTO brand VALUES('zara', 'png');
+INSERT INTO brand VALUES('h&m', 'png');
+INSERT INTO brand VALUES('nike', 'png');
+
+INSERT INTO brand VALUES('andew', 'jpg');
+INSERT INTO brand VALUES('armani', 'png');
+INSERT INTO brand VALUES('balenciaga', 'jpg');
+INSERT INTO brand VALUES('beanpole', 'png');
+INSERT INTO brand VALUES('bottega', 'png');
+INSERT INTO brand VALUES('carhartt', 'jpg');
+INSERT INTO brand VALUES('chris', 'jpg');
+INSERT INTO brand VALUES('descente', 'png');
+INSERT INTO brand VALUES('fila', 'png');
+INSERT INTO brand VALUES('giordano', 'png');
+INSERT INTO brand VALUES('gucci', 'png');
+INSERT INTO brand VALUES('hazzys', 'jpg');
+INSERT INTO brand VALUES('lacoste', 'png');
+INSERT INTO brand VALUES('muji', 'png');
+INSERT INTO brand VALUES('paulsmith', 'jpg');
+INSERT INTO brand VALUES('ralph', 'png');
+INSERT INTO brand VALUES('sieg', 'png');
+INSERT INTO brand VALUES('solidhomme', 'jpg');
+INSERT INTO brand VALUES('supreme', 'png');
+INSERT INTO brand VALUES('theory', 'png');
+INSERT INTO brand VALUES('thisisneverthat', 'jpg');
+INSERT INTO brand VALUES('tiformen', 'jpg');
+INSERT INTO brand VALUES('tngt', 'png');
+INSERT INTO brand VALUES('uniqlo', 'png');
+INSERT INTO brand VALUES('adidas', 'jpg');
+
+
+INSERT INTO pattern(file_type) VALUES('png');
+
+INSERT INTO shoe(shoe_name, file_type) VALUES('정장 구두', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('로퍼', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('보트 신발', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('드라이빙 슈즈', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('부츠', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('캐주얼 스니커즈', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('운동화', 'png');
+INSERT INTO shoe(shoe_name, file_type) VALUES('샌들', 'jpeg');
+
+INSERT INTO avoid(avoid_item) VALUES('graphic');
+INSERT INTO avoid(avoid_item) VALUES('china');
+INSERT INTO avoid(avoid_item) VALUES('vneck');
+INSERT INTO avoid(avoid_item) VALUES('round');
+INSERT INTO avoid(avoid_item) VALUES('shorts');
+INSERT INTO avoid(avoid_item) VALUES('short_button');
+INSERT INTO avoid(avoid_item) VALUES('socks');
+INSERT INTO avoid(avoid_item) VALUES('shoes');
+INSERT INTO avoid(avoid_item) VALUES('tie');
+INSERT INTO avoid(avoid_item) VALUES('none');
+INSERT INTO avoid(avoid_item) VALUES('other');
+
+INSERT INTO style_types(category, file_name, file_type) VALUES('');

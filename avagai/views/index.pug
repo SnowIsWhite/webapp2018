@@ -1,0 +1,130 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer, src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    link(rel="stylesheet" href="/css/index.css")
+    title Avagai Style
+  body
+    // Wrapper
+    
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              if session === 'logged'
+                a#login.nav-btn(href="/auth/logout") 로그아웃
+              else
+                a#login.nav-btn(href="/auth/login") 로그인
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    // Top Container
+    .main-content
+      section.top-container
+        // <img src="/img/index/cover-fashion-1.jpg" alt="">
+        img(src="/img/index/cover-fashion-2.jpg" alt="")
+        // <img src="/img/index/cover-fashion-3.jpg" alt="">
+        .content-wrap
+          h1 남성을 위한 맞춤형 스타일 추천 플랫폼
+          h3 더 이상 옷을 고르는 데 시간을 낭비하지 마세요.
+        .btn-container
+          a.btn(href="/auth/register") 지금 시작하기
+      .info-section
+        // info section
+        section.info.two-img
+          .content-title
+            h3 설문지를 작성하고 <br>가지고 있는 옷을 등록하세요
+          ul
+            li
+              img#first(src="/img/index/survey.jpg" alt="")
+            li
+              img#second(src="/img/index/clothing.jpg" alt="")
+          //
+            <div class="btn-container">
+            <a href="#" class="btn">지금 시작하기</a>
+            </div>
+        section#magazine.info
+          .content-title
+            h3
+              | 당신만을 위한 맞춤형 스타일링을 
+              br
+              |  매거진으로 받아보세요
+          .content-description
+            p 전문 스타일리스트가 등록된 옷을 이용해 스타일링 해 드립니다.
+            p 등록된 옷과 매치해 활용성 높은 옷을 추천해 드립니다.
+          img(src="/img/index/style_magazine.jpg" alt="")
+          //
+            <div class="btn-container">
+            <a href="#" class="btn">지금 시작하기</a>
+            </div>
+        // artificial shopping mall
+        section#shopping.info
+          .content-title
+            h3
+              | 추천 받은 옷 중 마음에 드는 옷만 
+              br
+              | 부담없이 구매하세요
+          .content-description
+            p Avagai Style은 고객님이 설정한 가격대에서 옷을 추천합니다.
+            p
+              | 인공지능 쇼핑몰에서는 비슷한 옷, 
+              br
+              | 비슷한 스타일을 비교하실 수 있습니다.
+          img(src="/img/index/shopping.jpg" alt="")
+          //
+            <div class="btn-container">
+            <a href="#" class="btn">지금 시작하기</a>
+            </div>
+        //- section#tip.info
+        //-   .content-title
+        //-     h3
+        //-       | 스타일리스트가 제안하는 
+        //-       br
+        //-       |  맞춤형 스타일링팁을 구독하세요
+        //-   img(src="/img/index/style_tip.jpg" alt="")
+        //-   //
+        //-     <div class="btn-container">
+        //-     <a href="#" class="btn">지금 시작하기</a>
+        //-     </div>
+        //- // ask stylist
+        //- section#ask.info
+        //-   .content-title
+        //-     h3 언제든지 스타일리스트에게 물어보세요
+        //-   img(src="/img/index/ask.jpg" alt="")
+        //-   //
+        //-     <div class="btn-container">
+        //-     <a href="#" class="btn">지금 시작하기</a>
+        //-     </div>
+        //- section#membership.info
+        //-   .content-title
+        //-     h3 다양한 멤버십 요금제
+        //-   .icon
+        //-     i.fas.fa-tags.fa-3x
+        //-   .btn-container
+        //-     a.btn(href="/auth/register") 지금 시작하기
+        //- section#team.info
+        //-   .content-title
+        //-     h3 스타일리스트 소개
+        //-   .icon
+        //-     i.fas.fa-user-circle.fa-3x
+        //-   p.stylist
+        //-     | 이경원  
+        //-     a(href="https://www.instagram.com/project_mag/")
+        //-       i.fab.fa-instagram.fa-2x
+    // end of info section
+    
+    // Footer
+    footer#main-footer
+      p 대표: 배재익
+      p Tel: 010-6450-0179
+      p Email: avagaistyle@gmail.com
+      p 고객센터 운영: 오전 10시 ~ 오후 6시 (공휴일 제외)
+      p.logo  Avagai © 2018
+    // Wrapper ends

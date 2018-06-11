@@ -1,0 +1,6 @@
+@import url('layout.css');
+@import url('survey.css');
+
+.survey-answer-subgroup-title p{
+  margin-bottom: 10px;
+}

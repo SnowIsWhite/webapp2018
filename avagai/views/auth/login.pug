@@ -1,0 +1,54 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer, src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    link(rel="stylesheet" href="/css/login.css")
+    title Login
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            // <li><a href="#" class="nav-btn" id="register">회원가입</a></li>
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    .main-grid
+      .main-container
+        .login-title
+          p 로그인
+        .main-form
+          form(action="/auth/login" method="post")
+            .id
+              p 이메일 주소
+              if (err== 'Incorrect Username.')
+                span#msg 이메일 주소를 확인해주세요.
+              label(for="email")
+                input#email(type="text" name="username" maxlength="50" required)
+            .password
+              p 비밀번호
+              if (err == 'Incorrect password.')
+                span#msg 비밀번호를 확인해주세요.
+              label(for="password")
+                input#password(type="password" name="password" maxlength="50" autocomplete="off" required)
+            .submit
+              input(type="submit" value="로그인")
+            .border-line
+        //
+          <div class="lost">
+          </div>
+        .register-container
+          .register
+            h4 Avagai Style 회원이 아닌가요?
+            a(href="/index") 지금 가입하세요.
+      // end of main container
+    // Footer
+    footer#main-footer
+      p 질문이 있으신가요? 고객 센터에 문의하세요.
+      p.logo  Avagai © 2018

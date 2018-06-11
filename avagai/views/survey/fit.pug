@@ -1,0 +1,408 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer="" src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+    script(type="text/javascript" src="/tools/validate.js")
+    link(rel="stylesheet" href="/css/fit.css")
+    title Fit
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              a#login.nav-btn(href="/auth/logout") 로그아웃
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    // Main
+    .main-grid
+      .main-container
+        .survey-progress-header
+          h1 핏
+          h3 설문 2/3단계
+        .border
+        form(action="/survey/fit" method="post")
+          // shirts
+          .survey-container
+            .survey-question
+              p.question-top 선호하는 티셔츠핏을 골라주세요.
+              p.question-sub 복수 선택 가능해요~
+              p#shirts_fit
+            .survey-answer
+              .survey-answer-list
+                ul
+                  li
+                    if data
+                      input#shirts-fit-1(type="checkbox" name="tshirts_fit" value="slim" checked=data.tshirts_fit.includes('slim'))
+                    else
+                      input#shirts-fit-1(type="checkbox" name="tshirts_fit" value="slim")
+                    label.img-selector(for="shirts-fit-1")
+                      img(src="/img/fit/shirt-fit.png" alt="")
+                      span 슬림
+                  li
+                    if data
+                      input#shirts-fit-2(type="checkbox" name="tshirts_fit" value="regular" checked=data.tshirts_fit.includes('regular'))
+                    else
+                      input#shirts-fit-2(type="checkbox" name="tshirts_fit" value="regular")
+                    label.img-selector(for="shirts-fit-2")
+                      img(src="/img/fit/shirt-regular.png" alt="")
+                      span 보통
+                  li
+                    if data
+                      input#shirts-fit-3(type="checkbox" name="tshirts_fit" value="loose" checked=data.tshirts_fit.includes('loose'))
+                    else
+                      input#shirts-fit-3(type="checkbox" name="tshirts_fit" value="loose")
+                    label.img-selector(for="shirts-fit-3")
+                      img(src="/img/fit/shirt-loose.jpg" alt="")
+                      span 루즈
+          .border
+          // Button up shirts
+          .survey-container
+            .survey-question
+              p.question-top 선호하는 셔츠핏을 골라주세요.
+              p.question-sub 복수 선택 가능해요~
+              p#button_fit
+            .survey-answer
+              .survey-answer-list
+                ul
+                  li
+                    if data
+                      input#button-fit-1(type="checkbox" name="button_fit" value="slim" checked=data.button_fit.includes('slim'))
+                    else
+                      input#button-fit-1(type="checkbox" name="button_fit" value="slim")                    
+                    label.img-selector(for="button-fit-1")
+                      img(src="/img/fit/button-up-fit.png" alt="")
+                      span 슬림
+                  li
+                    if data
+                      input#button-fit-2(type="checkbox" name="button_fit" value="regular" checked=data.button_fit.includes('regular'))
+                    else
+                      input#button-fit-2(type="checkbox" name="button_fit" value="regular")                        
+                    label.img-selector(for="button-fit-2")
+                      img(src="/img/fit/button-up-regular.png" alt="")
+                      span 보통
+          .border
+          // Tuck in
+          .survey-container
+            .survey-question
+              p 보통 셔츠를 바지속에 넣어 입으시나요?
+              p#tuck_in
+            .survey-answer
+              -
+                var tuck = [
+                  {'yes' : '네'},
+                  {'no' : '아니오'},
+                  {'dont': '셔츠를 잘 안 입어요.'}
+                ]
+              each obj in tuck
+                each key, val in obj
+                  .survey-answer-radio
+                    label.btn
+                      if data
+                        input(type="radio" value=val name="tuck_in" checked=data.tuck_in==val)
+                      else
+                        input(type="radio" value=val name="tuck_in")
+                      span.empty-circle
+                        i.far.fa-circle.fa-1x
+                      span.full-circle
+                        i.fas.fa-circle.fa-1x
+                      span #{key}
+                      
+          .border
+          // Jeans
+          .survey-container
+            .survey-question
+              p.question-top 선호하는 바지핏을 골라주세요.
+              p.question-sub 복수 선택 가능해요~
+              p#jeans_fit
+            .survey-answer
+              .survey-answer-list
+                ul
+                  -
+                    var jeans = [
+                      {'skinny' : ['스키니', '/img/fit/skinny.png']},
+                      {'slim' : ['슬림', '/img/fit/slim.png']},
+                      {'straight' : ['스트레이트', '/img/fit/straight.png']},
+                      {'relaxed' : ['릴렉스', '/img/fit/relaxed.png']}
+                    ]
+                  
+                  each obj in jeans
+                    each key, val in obj
+                      li
+                        if data
+                          input(id=val type="checkbox" name="jeans_fit" value=val checked=data.jeans_fit.includes(val))
+                        else
+                          input(id=val type="checkbox" name="jeans_fit" value=val)
+                        label.img-selector(for=val)
+                          img(src=key[1])
+                          span #{key[0]}
+                  
+          .border
+          // Pants
+          //- .survey-container
+          //-   .survey-question
+          //-     p.question-top 선호하는 바지핏을 골라주세요.
+          //-     p.question-sub 복수 선택 가능해요~
+          //-     p#pants_fit
+          //-   .survey-answer
+          //-     .survey-answer-list
+          //-       ul
+          //-         -
+          //-           var pants = [
+          //-             {'slim' : ['슬림', '/img/fit/pants-slim.png']},
+          //-             {'straight' : ['스트레이트', '/img/fit/pants-straight.png']},
+          //-             {'relaxed' : ['릴렉스', '/img/fit/pants-relaxed.png']}
+          //-           ]
+          //- 
+          //-         each obj in pants
+          //-           each key, val in obj
+          //-             li
+          //-               if data
+          //-                 input(id="pants-"+val type="checkbox" name="pants_fit" value=val checked=data.pants_fit.includes(val))
+          //-               else
+          //-                 input(id="pants-"+val type="checkbox" name="pants_fit" value=val)
+          //-               label.img-selector(for="pants-"+val)
+          //-                 img(src=key[1])
+          //-                 span #{key[0]}
+          //- .border
+          // Inseam
+          //
+            <div class="survey-container">
+            <div class="survey-question">
+            <p class="question-top">선호하는 바지 기장을 골라주세요.</p>
+            <p class="question-sub">복수 선택 가능해요~</p>
+            </div>
+            <div class="survey-answer">
+            <div class="survey-answer-list">
+            <ul>
+            <li>
+            <input type="checkbox" name="inseam_fit" id="inseam-fit-1" value="under">
+            <label class="img-selector" for="inseam-fit-1">
+            <img src="/img/fit/under.png" alt="">
+            <span>under</span>
+            </label>
+            </li>
+            <li>
+            <input type="checkbox" name="inseam_fit" id="inseam-fit-2" value="middle">
+            <label class="img-selector" for="inseam-fit-2">
+            <img src="/img/fit/middle.png" alt="">
+            <span>middle</span>
+            </label>
+            </li>
+            <li>
+            <input type="checkbox" name="inseam_fit" id="inseam-fit-3" value="above">
+            <label class="img-selector" for="inseam-fit-3">
+            <img src="/img/fit/above.png" alt="">
+            <span>above</span>
+            </label>
+            </li>
+            </ul>
+            </div>
+            </div>
+            </div>
+            <div class="border"></div>
+          // Shorts
+          .survey-container
+            .survey-question
+              p.question-top 선호하는 반바지 길이를 골라주세요.
+              p.question-sub 복수 선택 가능해요~
+              p#shorts_fit
+            .survey-answer
+              .survey-answer-list
+                ul
+                  -
+                    var shorts = [
+                      {'at' : ['무릎길이', '/img/fit/shorts-at.png']},
+                      {'above' : ['무릎 살짝 위', '/img/fit/shorts-above.png']},
+                      {'lower' : ['허벅지 아래', '/img/fit/shorts-lower.png']},
+                      {'upper' : ['허벅지 위', '/img/fit/shorts-upper.png']}
+
+                    ]
+
+                  each obj in shorts
+                    each key, val in obj
+                      li
+                        if data
+                          input(id=val type="checkbox" name="shorts_fit" value=val checked=data.shorts_fit.includes(val))
+                        else
+                          input(id=val type="checkbox" name="shorts_fit" value=val)
+                        label.img-selector(for=val)
+                          img(src=key[1])
+                          span #{key[0]}
+          .border
+            
+          // tough points
+          .survey-container
+            .survey-question
+              p 평소에 어떤 부분의 핏이 잘 안 맞나요?
+            .survey-answer
+              //- .survey-answer-switch
+              //-   .survey-answer-subgroup-title
+              //-     p 셔츠 깃
+              //-   .survey-answer-switch-grid
+              //-     label
+              //-       if data
+              //-         input(type="radio" value="tight" name="fit_prob1" checked=data.fit_prob1=='tight')
+              //-       else
+              //-         input(type="radio" value="tight" name="fit_prob1")
+              //- 
+              //-       span 조금 껴요
+              //-     label
+              //-       if data
+              //-         input(type="radio" value="no-prob" name="fit_prob1" checked=data.fit_prob1=='no-prob')
+              //-       else
+              //-         input(type="radio" value="no-prob" name="fit_prob1" checked="true")
+              //- 
+              //-       span 문제 없어요
+              //-     label
+              //-       if data
+              //-         input(type="radio" value="left" name="fit_prob1" checked=data.fit_prob1=='left')
+              //-       else
+              //-         input(type="radio" value="left" name="fit_prob1")
+              //-       span 조금 남아요
+                    
+              .survey-answer-switch
+                .survey-answer-subgroup-title
+                  p 셔츠 어깨부분
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="tight" name="fit_prob2" checked=data.fit_prob2=='tight')
+                    else
+                      input(type="radio" value="tight" name="fit_prob2")
+
+                    span 조금 껴요
+                  label
+                    if data
+                      input(type="radio" value="no-prob" name="fit_prob2" checked=data.fit_prob2=='no-prob')
+                    else
+                      input(type="radio" value="no-prob" name="fit_prob2" checked="true")
+
+                    span 문제 없어요
+                  label
+                    if data
+                      input(type="radio" value="left" name="fit_prob2" checked=data.fit_prob2=='left')
+                    else
+                      input(type="radio" value="left" name="fit_prob2")
+                    span 조금 남아요
+                    
+              .survey-answer-switch
+                .survey-answer-subgroup-title
+                  p 목 둘레
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="tight" name="fit_prob3" checked=data.fit_prob3=='tight')
+                    else
+                      input(type="radio" value="tight" name="fit_prob3")
+
+                    span 조금 작아요
+                  label
+                    if data
+                      input(type="radio" value="no-prob" name="fit_prob3" checked=data.fit_prob3=='no-prob')
+                    else
+                      input(type="radio" value="no-prob" name="fit_prob3" checked="true")
+
+                    span 문제 없어요
+                  label
+                    if data
+                      input(type="radio" value="left" name="fit_prob3" checked=data.fit_prob3=='left')
+                    else
+                      input(type="radio" value="left" name="fit_prob3")
+                    span 조금 커요
+                    
+              .survey-answer-switch
+                .survey-answer-subgroup-title
+                  p 팔길이
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="tight" name="fit_prob4" checked=data.fit_prob4=='tight')
+                    else
+                      input(type="radio" value="tight" name="fit_prob4")
+
+                    span 조금 짧아요
+                  label
+                    if data
+                      input(type="radio" value="no-prob" name="fit_prob4" checked=data.fit_prob4=='no-prob')
+                    else
+                      input(type="radio" value="no-prob" name="fit_prob4" checked="true")
+
+                    span 문제 없어요
+                  label
+                    if data
+                      input(type="radio" value="left" name="fit_prob4" checked=data.fit_prob4=='left')
+                    else
+                      input(type="radio" value="left" name="fit_prob4")
+                    span 조금 길어요
+                    
+              .survey-answer-switch
+                .survey-answer-subgroup-title
+                  p 바지통
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="tight" name="fit_prob5" checked=data.fit_prob5=='tight')
+                    else
+                      input(type="radio" value="tight" name="fit_prob5")
+
+                    span 조금 껴요
+                  label
+                    if data
+                      input(type="radio" value="no-prob" name="fit_prob5" checked=data.fit_prob5=='no-prob')
+                    else
+                      input(type="radio" value="no-prob" name="fit_prob5" checked="true")
+
+                    span 문제 없어요
+                  label
+                    if data
+                      input(type="radio" value="left" name="fit_prob5" checked=data.fit_prob5=='left')
+                    else
+                      input(type="radio" value="left" name="fit_prob5")
+                    span 조금 남아요
+                    
+              .survey-answer-switch
+                .survey-answer-subgroup-title
+                  p 바지 기장
+                .survey-answer-switch-grid
+                  label
+                    if data
+                      input(type="radio" value="tight" name="fit_prob6" checked=data.fit_prob6=='tight')
+                    else
+                      input(type="radio" value="tight" name="fit_prob6")
+
+                    span 조금 짧아요
+                  label
+                    if data
+                      input(type="radio" value="no-prob" name="fit_prob6" checked=data.fit_prob6=='no-prob')
+                    else
+                      input(type="radio" value="no-prob" name="fit_prob6" checked="true")
+
+                    span 문제 없어요
+                  label
+                    if data
+                      input(type="radio" value="left" name="fit_prob6" checked=data.fit_prob6=='left')
+                    else
+                      input(type="radio" value="left" name="fit_prob6")
+                    span 조금 길어요
+          // Main Container ends
+          
+          .submit
+            button(type="submit" id="checkBtn")
+              span 저장하고 다음 단계로
+              
+          a#prev(href="/survey/profile") 이전 단계로 돌아가기
+            
+        // end of submit button
+      // Main Grid ends
+    // Footer
+    footer#main-footer
+      p.logo  Avagai © 2018

@@ -1,0 +1,87 @@
+@import url('layout.css');
+@import url('survey.css');
+
+.greeting h2{
+  margin-bottom: 4px;
+}
+
+.description p{
+  margin-top: 7px;
+}
+
+/* skintone */
+span[class^="color-box-background-"]{
+  display: inline-block;
+  width: 100%;
+  height: 3rem;
+}
+
+#div-skintone ul{
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.7rem;
+}
+
+.color-box-background-1{
+  background-color: #FDE2C5;
+}
+
+.color-box-background-2{
+  background-color: #FFE1C7;
+}
+
+.color-box-background-3{
+  background-color: #FCDACE;
+}
+
+.color-box-background-4{
+  background-color: #ECCAA7;
+}
+
+.color-box-background-5{
+  background-color: #F0C4A7;
+}
+
+.color-box-background-6{
+  background-color: #EEBCA5;
+}
+
+.color-box-background-7{
+  background-color: #DBAC74;
+}
+
+.color-box-background-8{
+  background-color: #D6A584;
+}
+
+.color-box-background-9{
+  background-color: #D89A83;
+}
+
+.survey-size-subgroup-row{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-bottom: 1rem;
+  margin-top: 1.3rem;
+}
+
+.survey-size-left{
+  margin-top: 0.5rem;
+  align-items: center;
+  grid-column: 1/2;
+}
+.survey-size-left span{
+  font-size: 1.1rem;
+}
+.survey-size-right{
+  grid-column: 2/4;
+}
+
+
+@media(min-width: 900px){
+  .survey-size-right{
+    grid-column: 2/3;
+  }
+}

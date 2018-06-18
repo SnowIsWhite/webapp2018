@@ -757,5 +757,37 @@ module.exports = function(app, conn){
 
   });
 
+  route.post('/having', function(req, res){
+    var id = req.session.passport.user;
+    // check if data already exists
+    var sql = 'SELECT * FROM user_having WHERE user_id=?'
+    conn.query(sql, [id], function(err, result){
+      if (err) throw err;
+      if (result.length != 0){
+        // delete existing values
+        var sql = 'DELETE FROM user_having WHERE user_id=?'
+        conn.query(sql, [id], function(err, result2){
+          if (err) throw err;
+          console.log(result2)
+        });
+      } // end of if
+      var having = req.body.having;
+      if (!_.isArray(having)){
+        var temp = having;
+        var having = [];
+        having.push(temp)
+      }
+      var sql = 'INSERT INTO user_having (user_id, having_id) VALUES ';
+      for (var i = 0; i < having.length; i++){
+        sql = sql + '(' + "'" + id + "'" + ',' + "'" + having[i] + "'" + ')';
+        if (i!=(having.length-1)) sql = sql + ',';
+      }
+      conn.query(sql, function(err, result2){
+        if (err) throw err;
+        res.redirect('wanted')
+      })
+    }); //end of conn
+  })
+
   return route;
 }

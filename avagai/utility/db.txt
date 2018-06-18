@@ -220,7 +220,7 @@ create table preference_avoid(
 )engine=innodb;
 
 create table style_types(
-  style_id int(100) not null auto_increment,
+  style_id int(10) not null auto_increment,
   category varchar(20),
   file_name varchar(100),
   file_type varchar(10),
@@ -238,4 +238,38 @@ create table preference_style(
 )engine=innodb;
 
 *******************************************************************************
+HAVING, WANTED
 *******************************************************************************
+create table having_items(
+  having_id int(10) not null auto_increment,
+  file_name varchar(100),
+  file_type varchar(10),
+  primary key(having_id)
+)engine=innodb;
+
+create table user_having(
+  user_id varchar(100) not null,
+  having_id int(10),
+  primary key(user_id, having_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(having_id) references having_items(having_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;
+
+create table wanted_items(
+  wanted_id int(10) not null auto_increment,
+  file_name varchar(100),
+  file_type varchar(10),
+  primary key(wanted_id)
+)engine=innodb;
+
+create table user_wanted(
+  user_id varchar(100) not null,
+  wanted_id int(10),
+  primary key(user_id, wanted_id),
+  foreign key(user_id) references users(user_id),
+  foreign key(wanted_id) references wanted_items(wanted_id)
+  ON DELETE CASCADE
+  ON UPDATE CASCADE
+)engine=innodb;

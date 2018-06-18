@@ -26,7 +26,6 @@ INSERT INTO shorts_fit VALUES ('upper');
 INSERT INTO brand VALUES('zara', 'png');
 INSERT INTO brand VALUES('h&m', 'png');
 INSERT INTO brand VALUES('nike', 'png');
-
 INSERT INTO brand VALUES('andew', 'jpg');
 INSERT INTO brand VALUES('armani', 'png');
 INSERT INTO brand VALUES('balenciaga', 'jpg');
@@ -55,6 +54,17 @@ INSERT INTO brand VALUES('adidas', 'jpg');
 
 
 INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
+INSERT INTO pattern(file_type) VALUES('png');
 
 INSERT INTO shoe(shoe_name, file_type) VALUES('정장 구두', 'png');
 INSERT INTO shoe(shoe_name, file_type) VALUES('로퍼', 'png');
@@ -76,5 +86,3 @@ INSERT INTO avoid(avoid_item) VALUES('shoes');
 INSERT INTO avoid(avoid_item) VALUES('tie');
 INSERT INTO avoid(avoid_item) VALUES('none');
 INSERT INTO avoid(avoid_item) VALUES('other');
-
-INSERT INTO style_types(category, file_name, file_type) VALUES('');

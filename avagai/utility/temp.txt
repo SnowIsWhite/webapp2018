@@ -1,3 +1,0 @@
-app.get('/survey/profile'): show survey_profile
-  app.get('/survey/fit')
-    app.get('survey/style')

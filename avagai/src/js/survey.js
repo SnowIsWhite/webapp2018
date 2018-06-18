@@ -758,7 +758,6 @@ module.exports = function(app, conn){
   });
 
   route.post('/having', function(req, res){
-    console.log('are you here')
     var id = req.session.passport.user;
     // check if data already exists
     var sql = 'SELECT * FROM user_having WHERE user_id=?'

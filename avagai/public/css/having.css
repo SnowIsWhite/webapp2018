@@ -1,0 +1,73 @@
+@import url('layout.css');
+@import url('survey.css');
+
+.survey-progress-header h1{
+  font-size: 1.5rem;
+}
+
+#having ul{
+  grid-gap: 2px;
+}
+
+#img-desc{
+  margin-top: 0;
+}
+.visually-hidden {
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
+.load-more input{
+  display: block;
+  height: 50px;
+  width: 200px;
+  margin-top: 4rem;
+  margin-right: auto;
+  margin-left: auto;
+  clear: both;
+  cursor: pointer;
+  background-color: var(--font);
+  border: 1px solid var(--font);
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  transition: all .3s;
+}
+
+.load-more input:hover{
+  background-color: white;
+  color: var(--font);
+  transition: all 600ms ease-in-out;
+  -webkit-transition: all 600ms ease-in-out;
+  -moz-transition: all 600ms ease-in-out;
+  -o-transition: all 600ms ease-in-out;
+}
+
+@media(min-width: 500px){
+  #having ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(min-width: 900px){
+  #having ul{
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media(min-width: 1000px){
+  #having ul{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+@media(min-width: 1200px){
+  #having ul{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  }
+}

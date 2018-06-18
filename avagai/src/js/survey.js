@@ -45,6 +45,19 @@ module.exports = function(app, conn){
     });
   }
 
+  var check_style = function(id){
+    var sql = 'SELECT * FROM preference_style WHERE user_id=?'
+    conn.query(sql, [id], function(err, result, fields){
+      if (err){
+        console.log('db error');
+        throw err;
+      }
+      else if (result.length == 0){
+        res.redirect('style');
+      }
+    });
+  }
+
   route.get('/profile', function(req, res){
     var id = req.session.passport.user;
     check_registered(id);
@@ -418,7 +431,7 @@ module.exports = function(app, conn){
         })
       },
       function(callback){
-        var sql = 'SELECT * FROM  style_types';
+        var sql = 'SELECT * FROM style_types';
         conn.query(sql, function(err, content){
           if (err) throw err;
           var styles = content;
@@ -688,9 +701,60 @@ module.exports = function(app, conn){
       ]
       async.parallel(tasks ,function(err, results){
         if (err) throw err;
-        res.redirect('/success');
+        res.redirect('having');
       }); // end of async
     });
+  });
+
+  route.get('/having', function(req, res){
+    var id = req.session.passport.user;
+    //check if id is registered
+    check_registered(id);
+    //check user finished profile survey
+    check_profile(id);
+    //check user finished profile fit
+    check_fit(id);
+    //check if user finished style
+    check_style(id);
+
+    var tasks = [
+      function(callback){
+        var sql = 'SELECT * FROM having_items';
+        conn.query(sql, function(err, content){
+          if (err) throw err;
+          var having = content;
+          callback(err, having);
+        })
+      }
+    ]
+    async.parallel(tasks, function(err, results){
+      if (err) throw err;
+      else{
+        var having = results[0];
+        having = _.shuffle(having);
+        var having_list = [];
+        var name_list = [];
+        for (var i = 0; i < having.length; i++){
+          dict = {};
+          file_path = having[i]["file_name"] + "." + having[i]["file_type"];
+          dict[having[i]["having_id"]] = file_path;
+          having_list.push(dict)
+          name_list.push(having[i]["file_name"])
+        }
+        // check if there's prev user data
+        var sql = 'SELECT * FROM user_having WHERE user_id=?';
+        conn.query(sql, [id], function(err, result){
+          if (err) throw err;
+          else if(result.length == 0){
+            res.render('survey/having', {having_list: having_list, having_names: name_list})
+          }
+          else{
+            res.render('survey/having', {having_list: having_list, having_names: name_list, having: JSON.stringify(result[0])})
+          }
+        })
+      }
+    })
+
   });
 
   return route;

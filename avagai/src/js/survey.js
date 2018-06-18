@@ -758,6 +758,7 @@ module.exports = function(app, conn){
   });
 
   route.post('/having', function(req, res){
+    console.log('are you here')
     var id = req.session.passport.user;
     // check if data already exists
     var sql = 'SELECT * FROM user_having WHERE user_id=?'
@@ -789,5 +790,86 @@ module.exports = function(app, conn){
     }); //end of conn
   })
 
+  route.get('/wanted', function(req, res){
+    var id = req.session.passport.user;
+    //check if id is registered
+    check_registered(id);
+    //check user finished profile survey
+    check_profile(id);
+    //check user finished profile fit
+    check_fit(id);
+    //check if user finished style
+    check_style(id);
+
+    var tasks = [
+      function(callback){
+        var sql = 'SELECT * FROM wanted_items';
+        conn.query(sql, function(err, content){
+          if (err) throw err;
+          var wanted = content;
+          callback(err, wanted);
+        })
+      }
+    ]
+    async.parallel(tasks, function(err, results){
+      if (err) throw err;
+      else{
+        var wanted = results[0];
+        wanted = _.shuffle(wanted);
+        var wanted_list = [];
+        var wanted_names = [];
+        for (var i = 0; i < wanted.length; i++){
+          dict = {};
+          file_path = wanted[i]["file_name"] + "." + wanted[i]["file_type"];
+          dict[wanted[i]["wanted_id"]] = file_path;
+          wanted_list.push(dict)
+          wanted_names.push(wanted[i]["file_name"])
+        }
+        // check if there's prev user data
+        var sql = 'SELECT * FROM user_wanted WHERE user_id=?';
+        conn.query(sql, [id], function(err, result){
+          if (err) throw err;
+          else if(result.length == 0){
+            res.render('survey/wanted', {wanted_list: wanted_list, wanted_names: wanted_names})
+          }
+          else{
+            res.render('survey/wanted', {wanted_list: wanted_list, wanted_names: wanted_names, wanted: JSON.stringify(result[0])})
+          }
+        })
+      }
+    })
+  });
+
+  route.post('/wanted', function(req, res){
+    var id = req.session.passport.user;
+    // check if data already exists
+    var sql = 'SELECT * FROM user_wanted WHERE user_id=?'
+    conn.query(sql, [id], function(err, result){
+      if (err) throw err;
+      if (result.length != 0){
+        // delete existing values
+        var sql = 'DELETE FROM user_wanted WHERE user_id=?'
+        conn.query(sql, [id], function(err, result2){
+          if (err) throw err;
+          console.log(result2)
+        });
+      } // end of if
+      var wanted = req.body.wanted;
+      if (!_.isArray(wanted)){
+        var temp = wanted;
+        var wanted = [];
+        wanted.push(temp)
+      }
+      var sql = 'INSERT INTO user_wanted (user_id, wanted_id) VALUES ';
+      for (var i = 0; i < wanted.length; i++){
+        sql = sql + '(' + "'" + id + "'" + ',' + "'" + wanted[i] + "'" + ')';
+        if (i!=(wanted.length-1)) sql = sql + ',';
+      }
+      conn.query(sql, function(err, result2){
+        if (err) throw err;
+        res.redirect('/success')
+      })
+    }); //end of conn
+  })
   return route;
 }

@@ -1,0 +1,70 @@
+doctype html
+html(lang="en")
+  head
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1.0")
+    meta(http-equiv="X-UA-Compatible" content="ie=edge")
+    script(defer="" src="https://use.fontawesome.com/releases/v5.0.12/js/all.js" integrity="sha384-Voup2lBiiyZYkRto2XWqbzxHXwzcm4A5RfdfG6466bu5LqjwwrjXCMBQBLMWh7qR" crossorigin="anonymous")
+    script(src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js")
+    script(type="text/javascript" src="/tools/load_more.js")
+    link(rel="stylesheet" href="/css/having.css")
+    title Wanted
+  body
+    // Navigator
+    header.header
+      nav.main-nav
+        .logo
+          a(href="/index")
+            img#logo(src="/img/index/logo.png" alt="")
+        .nav-bar
+          ul
+            li
+              a#login.nav-btn(href="/auth/logout") 로그아웃
+            // <li><a href="#" class="nav-btn" id="start">시작하기</a></li>
+            
+    // Main
+    .main-grid
+      .main-container
+        .survey-progress-header
+          h1 다음 중 추천받고 싶은 아이템을 골라주세요.
+          h3 설문 5/5단계
+        .border
+        form(action="/survey/wanted" method="post")
+          .survey-container
+            .survey-question
+              p 고객님이 추천받고 싶으신 아이템을 우선 코디해 드리겠습니다.
+            .survey-answer
+              #wanted.survey-answer-list
+                ul#style-ul
+                  - var i = 0
+                  each obj in wanted_list
+                    each file_path, wanted_id in obj
+                      - var name = wanted_names[i]
+                      li
+                        if wanted
+                          input(id=wanted_id type="checkbox" name="wanted" value=wanted_id checked=wanted.includes(wanted_id))
+                          label.img-selector(for=wanted_id)
+                            img(src="/img/wanted/" + file_path)
+                            p#img-desc #{name}
+                        else
+                          input(id=wanted_id type="checkbox" name="wanted" value=wanted_id)
+                          label.img-selector(for=wanted_id)
+                            img(src="/img/wanted/" + file_path)
+                            p#img-desc #{name}
+                    - i++
+                              
+              .load-more
+                input(type="button", id="load-more-styles" value="더 보기")
+          // Main Container ends
+          
+          .submit
+            button(type="submit" id="checkBtn")
+              span 완료!
+              
+          a#prev(href="/survey/having") 이전 단계로 돌아가기
+            
+        // end of submit button
+      // Main Grid ends
+    // Footer
+    footer#main-footer
+      p.logo  Avagai © 2018

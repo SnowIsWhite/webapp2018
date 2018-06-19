@@ -736,7 +736,7 @@ module.exports = function(app, conn){
         var name_list = [];
         for (var i = 0; i < having.length; i++){
           dict = {};
-          file_path = having[i]["file_name"] + "." + having[i]["file_type"];
+          file_path = having[i]["rename"] + "." + having[i]["file_type"];
           dict[having[i]["having_id"]] = file_path;
           having_list.push(dict)
           name_list.push(having[i]["file_name"])
@@ -819,7 +819,7 @@ module.exports = function(app, conn){
         var wanted_names = [];
         for (var i = 0; i < wanted.length; i++){
           dict = {};
-          file_path = wanted[i]["file_name"] + "." + wanted[i]["file_type"];
+          file_path = wanted[i]["rename"] + "." + wanted[i]["file_type"];
           dict[wanted[i]["wanted_id"]] = file_path;
           wanted_list.push(dict)
           wanted_names.push(wanted[i]["file_name"])

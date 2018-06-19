@@ -383,6 +383,7 @@ module.exports = function(app, conn){
     });
   });
 
+
   route.get('/style', function(req, res){
     var id = req.session.passport.user;
     //check if id is registered
@@ -391,7 +392,6 @@ module.exports = function(app, conn){
     check_profile(id);
     //check user finished profile fit
     check_fit(id);
-    console.log('here')
     // fetch all images to be displayed from database
     var tasks = [
       function(callback){

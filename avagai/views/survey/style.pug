@@ -374,7 +374,7 @@ html(lang="en")
                     each file_path, style_id in obj
                       li
                         if style
-                          input(id=style_id type="checkbox" name="style" value=style_id checked=style.includes(style_id))
+                          input(id=style_id type="checkbox" name="style" value=style_id checked=style.includes('"style_id":' + style_id + '}'))
                           label.img-selector(for=style_id)
                             img(src="/img/style/style-image/" + file_path)
                         else

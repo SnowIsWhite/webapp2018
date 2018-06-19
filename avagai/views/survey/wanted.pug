@@ -42,7 +42,7 @@ html(lang="en")
                       - var name = wanted_names[i]
                       li
                         if wanted
-                          input(id=wanted_id type="checkbox" name="wanted" value=wanted_id checked=wanted.includes(wanted_id))
+                          input(id=wanted_id type="checkbox" name="wanted" value=wanted_id checked=wanted.includes('"wanted_id":' + wanted_id + '}'))
                           label.img-selector(for=wanted_id)
                             img(src="/img/wanted/" + file_path)
                             p#img-desc #{name}

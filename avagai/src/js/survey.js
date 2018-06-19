@@ -534,7 +534,7 @@ module.exports = function(app, conn){
               if (err) throw err;
               else{
                 res.render('survey/style', {brand_list: results[0], pattern_list: results[1], shoe_list: shoe_list, shoe_name: shoe_name, avoid_list: avoid_list, style_list: style_list, data: result2[0][0], brand:JSON.stringify(result2[1]), avoid: JSON.stringify(result2[2]), pattern: result2[3], shoe: result2[4], style: JSON.stringify(result2[5])});
-                console.log(result2);
+                console.log(JSON.stringify(result2[5]));
               }
              })
           }
@@ -749,7 +749,7 @@ module.exports = function(app, conn){
             res.render('survey/having', {having_list: having_list, having_names: name_list})
           }
           else{
-            res.render('survey/having', {having_list: having_list, having_names: name_list, having: JSON.stringify(result[0])})
+            res.render('survey/having', {having_list: having_list, having_names: name_list, having: JSON.stringify(result)})
           }
         })
       }
@@ -782,8 +782,10 @@ module.exports = function(app, conn){
         sql = sql + '(' + "'" + id + "'" + ',' + "'" + having[i] + "'" + ')';
         if (i!=(having.length-1)) sql = sql + ',';
       }
+      console.log(sql)
       conn.query(sql, function(err, result2){
         if (err) throw err;
+        console.log(result2)
         res.redirect('wanted')
       })
     }); //end of conn
@@ -832,7 +834,7 @@ module.exports = function(app, conn){
             res.render('survey/wanted', {wanted_list: wanted_list, wanted_names: wanted_names})
           }
           else{
-            res.render('survey/wanted', {wanted_list: wanted_list, wanted_names: wanted_names, wanted: JSON.stringify(result[0])})
+            res.render('survey/wanted', {wanted_list: wanted_list, wanted_names: wanted_names, wanted: JSON.stringify(result)})
           }
         })
       }

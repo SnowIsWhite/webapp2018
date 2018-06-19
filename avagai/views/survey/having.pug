@@ -44,12 +44,12 @@ html(lang="en")
                         if having
                           input(id=having_id type="checkbox" name="having" value=having_id checked=having.includes(having_id))
                           label.img-selector(for=having_id)
-                            img(src="/img/having/" + file_path)
+                            img(src='/img/having/' + file_path)
                             p#img-desc #{name}
                         else
                           input(id=having_id type="checkbox" name="having" value=having_id)
                           label.img-selector(for=having_id)
-                            img(src="/img/having/" + file_path)
+                            img(src='/img/having/' + file_path)
                             p#img-desc #{name}
                     - i++
                               

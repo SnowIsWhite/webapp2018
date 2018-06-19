@@ -243,6 +243,7 @@ HAVING, WANTED
 create table having_items(
   having_id int(10) not null auto_increment,
   file_name varchar(100),
+  renamed varchar(100),
   file_type varchar(10),
   primary key(having_id)
 )engine=innodb;
@@ -260,6 +261,7 @@ create table user_having(
 create table wanted_items(
   wanted_id int(10) not null auto_increment,
   file_name varchar(100),
+  renamed varchar(100),
   file_type varchar(10),
   primary key(wanted_id)
 )engine=innodb;

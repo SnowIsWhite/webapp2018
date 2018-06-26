@@ -133,7 +133,7 @@ input[type="checkbox"]{
   -webkit-transition: all 0.25s linear;
 }
 
-.survey-answer-radio:hover label{
+.survey-answer-radio:hover span{
   font-weight: bold;
 }
 
